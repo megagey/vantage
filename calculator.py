@@ -1,0 +1,9 @@
+aluminiumPrice = 834
+copperPrice = 208.4
+fibrePrice = 834
+glassPrice = 417
+ironPrice = 1251
+metalScrapPrice = 1251
+plasticPrice = 1251
+steelPrice = 1668
+rubberPrice = 834
