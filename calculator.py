@@ -18,6 +18,13 @@ toolKit = 1150
 repairKit = 5500
 ammo = 5000
 
+def isFloat(string):
+    if string.replace(".", "").isnumeric():
+        return True
+    else:
+        return False
+
+
 def averageStock():
     return (stock["aluminiumStock"] + stock["copperStock"] + stock["fibreStock"] + stock["glassStock"] + stock["ironStock"] 
     + stock["metalScrapStock"] + stock["plasticStock"]+ stock["steelStock"] + stock["rubberStock"]) / 9
@@ -44,12 +51,13 @@ def sellItem(item):
     return price
 
 def menu():
-    print(20 * "-", "Vantage Tech and Hardware", 20 * "-")
+    print("\n" + (20 * "-"), "Vantage Tech and Hardware", 20 * "-")
     print("1 | Sell Item")
-    print("2 | Check Stock")
-    print("3 | Check Pricing")
-    print("4 | Exit")
-    return int(input("Please type a number"))
+    print("2 | Buy Van")
+    print("3 | Check Stock")
+    print("4 | Check Pricing")
+    print("5 | Exit")
+    return input("Please type a number")
 
 def sell():
     print("1  | Lock Pick")
@@ -73,65 +81,77 @@ def sell():
     print("19 | Night Vision Goggles")
     print("20 | Light Armour")
     print("21 | Exit")
-    return int(input("Please type a number"))
+    return input("Please type a number")
 
 choice = 0
 while True:
     choice = menu()
-    if choice == 1:
+    if choice == "1":
         select = sell()
-        if select == 1:
+        if select == "1":
             print("The price for a Lock Pick is $" + str(sellItem("Lock Pick")))
-        elif select == 2:
+        elif select == "2":
             print("The price for an Advanced Lock Pick is $" + str((sellItem("Advanced Lock Pick") + toolKit)))
-        elif select == 3:
-            print("The price for a Tool Kit is $" + toolKit)
-        elif select == 4:
+        elif select == "3":
+            print("The price for a Tool Kit is $" + str(toolKit))
+        elif select == "4":
             print("The price for an Electronic Kit is $" + str(sellItem("Electronic Kit")))
-        elif select == 5:
+        elif select == "5":
             print("The price for a spool of Steel Wire is $" + str(sellItem("Steel Wire")))
-        elif select == 6:
+        elif select == "6":
             print("The price for a Steel Hook is $" + str(sellItem("Steel Hook")))
-        elif select == 7:
+        elif select == "7":
             print("The price for a Rope is $" + str(sellItem("Rope")))
-        elif select == 8:
+        elif select == "8":
             print("The price for a Reinforced Rope is $" + str(sellItem("Reinforced Rope")))
-        elif select == 9:
+        elif select == "9":
             print("The price for a Rope and Hook is $" + str(sellItem("Rope and Hook")))
-        elif select == 10:
+        elif select == "10":
             print("The price for a Reinforced Rope and Hook is $" + str(sellItem("Reinforced Rope and Hook")))
-        elif select == 11:
+        elif select == "11":
             print("The price for a MD5 Crack USB is $" + str(sellItem("MD5 Crack USB")))
-        elif select == 12:
+        elif select == "12":
             print("The price for a Trojan USB is $" + str(sellItem("Trojan USB")))
-        elif select == 13:
-            print("The price for a Repair Kit is $" + repairKit)
-        elif select == 14:
-            print("The price for a box of Pistol Ammo is $" + ammo)
-        elif select == 15:
+        elif select == "13":
+            print("The price for a Repair Kit is $" + str(repairKit))
+        elif select == "14":
+            print("The price for a box of Pistol Ammo is $" + str(ammo))
+        elif select == "15":
             print("The price for a pile of Iron Powder is $" + str(sellItem("Iron Powder")))
-        elif select == 16:
+        elif select == "16":
             print("The price for a pile of Aluminium Powder is $" + str(sellItem("Aluminium Powder")))
-        elif select == 17:
+        elif select == "17":
             print("The price for a canister of Thermite is $" + str(sellItem("Thermite")))
-        elif select == 18:
+        elif select == "18":
             print("The price for a Drill is $" + str((sellItem("Drill") + (toolKit * 2))))
-        elif select == 19:
+        elif select == "19":
             print("The price for a pair of Night Vision Goggles is $" + str(sellItem("Night Vision Goggles")))
-        elif select == 20:
+        elif select == "20":
             print("The price for a Light Armour is $" + str(sellItem("Light Armour")))
-        elif select == 21:
+        elif select == "21":
             print("Exiting")
         else:
             print("Please type a valid number")
             print("Exiting")
-    elif choice == 2:
-        print("Buy Van")
-    elif choice == 3:
-        print("Check Stock")
-    elif choice == 4:
-        print("Check Pricing")
-    elif choice == 5:
+    elif choice == "2":
+        totalPrice = 0
+        for x in prices:
+            mat = x[0].lower() + x[1:-4]
+            while True:
+                amount = input("How much " + mat + "?")
+                if isFloat(amount) == True:
+                    amount = float(amount)
+                    break
+                else:
+                    print("\nPlease enter valid number\n")
+            totalPrice += (materialPrice(prices[x],  stock[mat + "Stock"]) * amount)
+        print("\nThe total price for the van is $" + str(totalPrice))
+
+    elif choice == "3":
+        print("\n" + "\n".join("{}\t{}".format(k, v) for k, v in stock.items()))
+    elif choice == "4":
+        print("\n" + "\n".join("{}\t{}".format(k, v) for k, v in prices.items()))
+    elif choice == "5":
         print("Closing")
         break
     else:
