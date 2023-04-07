@@ -1,46 +1,55 @@
-aluminiumBase = 834
-copperBase = 208.4
-fibreBase = 834
-glassBase = 417
-ironBase = 1251
-metalScrapBase = 1251
-plasticBase = 1251
-steelBase = 1668
-rubberBase = 834
+prices = {"aluminiumBase" : 83.4, "copperBase" : 20.84, "fibreBase" : 83.4, "glassBase" : 41.7, "ironBase" : 125.1, 
+"metalScrapBase" : 125.1, "plasticBase" : 125.1, "steelBase" : 166.8, "rubberBase" : 83.4}
 
-aluminiumStock = 5000
-copperStock = 5000
-fibreStock = 5000
-glassStock = 5000
-ironStock = 5000
-metalScrapStock = 5000
-plasticStock = 5000
-steelStock = 5000
-rubberStock = 5000
-
-def averageStock():
-    return (aluminiumStock + copperStock + fibreStock + glassStock + ironStock + metalScrapStock + plasticStock + steelStock + rubberStock) / 9
-
-def materialPrice(price, stock):
-    difference = (averageStock / stock)
-    return price * difference
+stock = {"aluminiumStock" : 5000, "copperStock" : 5000, "fibreStock" : 5000, "glassStock" : 5000, "ironStock" : 5000, 
+"metalScrapStock" : 5000, "plasticStock" : 5000, "steelStock" : 5000, "rubberStock" : 5000}
 
 items = {"Lock Pick": "metalScrap-42 plastic-52", "Advanced Lock Pick" : "metalScrap-42 plastic-52", 
 "Electronic Kit" : "aluminium-34 metalScrap-87 plastic-55", "Steel Wire" : "steel-40", "Steel Hook" : "steel-100", 
-"Rope" : "fibre-55", "Reinforced Rope" : "fibre-55 steel-1800", "Rope and Hook" : "fibre-55 steel-100",
- "Reinforced Rope and Hook" : "fibre-55 steel-1900", "MD5 Crack USB" : "aluminium-112 iron-23 metalScrap-195 plastic-164", 
- "Trojan USB" : "aluminium-146 iron-23 metalScrap-282 plastic-219", "Thermite" : "aluminium-260 glass-460 iron-260", 
- "Drill" : "iron-330 metalScrap-84 plastic-104 steel-350", 
- "Night Vision Goggles" : "aluminium-68 glass-365 metalScrap-174 plastic-110 steel-225 rubber-325", 
- "Light Armour" : "fibre-425 steel-550 rubber-435"}
+"Rope" : "fibre-55", "Reinforced Rope" : "fibre-55 steel-1800", "Rope and Hook" : "fibre-55 steel-100", 
+"Reinforced Rope and Hook" : "fibre-55 steel-1900", "MD5 Crack USB" : "aluminium-112 iron-23 metalScrap-195 plastic-164", 
+"Trojan USB" : "aluminium-146 iron-23 metalScrap-282 plastic-219", "Iron Powder" : "glass-230 iron-260", 
+"Aluminium Powder" : "aluminium-260 glass-230", "Thermite" : "aluminium-260 glass-460 iron-260", 
+"Drill" : "iron-330 metalScrap-84 plastic-104 steel-350", 
+"Night Vision Goggles" : "aluminium-68 glass-365 metalScrap-174 plastic-110 steel-225 rubber-325", 
+"Light Armour" : "fibre-425 steel-550 rubber-435"}
+
+toolKit = 1150
+repairKit = 5500
+ammo = 5000
+
+def averageStock():
+    return (stock["aluminiumStock"] + stock["copperStock"] + stock["fibreStock"] + stock["glassStock"] + stock["ironStock"] 
+    + stock["metalScrapStock"] + stock["plasticStock"]+ stock["steelStock"] + stock["rubberStock"]) / 9
+
+def materialPrice(price, stock):
+    average = averageStock()
+    difference = (average / stock)
+    return price * difference
+
+def recipe(name):
+    return items[name].split()
+
+def sellItem(item):
+    price = 0
+    itemRecipe = recipe(item)
+    for i in itemRecipe:
+        materials = i.split("-")
+        print(materials)
+        for e in materials:
+            if e.isdigit() == False:
+                cost = materialPrice(prices[e + "Base"], stock[e + "Stock"])
+            else:
+                price += cost * int(e)
+    return price
 
 def menu():
     print(20 * "-", "Vantage Tech and Hardware", 20 * "-")
     print("1 | Sell Item")
     print("2 | Check Stock")
     print("3 | Check Pricing")
-    print("3 | Exit")
-    return int(input("Please type 1, 2, 3, 4 or 5"))
+    print("4 | Exit")
+    return int(input("Please type a number"))
 
 def sell():
     print("1  | Lock Pick")
@@ -64,7 +73,7 @@ def sell():
     print("19 | Night Vision Goggles")
     print("20 | Light Armour")
     print("21 | Exit")
-    return int(input("Please type 1, 2, 3, 4 or 5"))
+    return int(input("Please type a number"))
 
 choice = 0
 while True:
@@ -72,48 +81,50 @@ while True:
     if choice == 1:
         select = sell()
         if select == 1:
-            print("Lock Pick")
-            materialPrice
+            print("The price for a Lock Pick is $" + str(sellItem("Lock Pick")))
         elif select == 2:
-            print("Advanced Lock Pick")
+            print("The price for an Advanced Lock Pick is $" + str((sellItem("Advanced Lock Pick") + toolKit)))
         elif select == 3:
-            print("Tool Kit")
+            print("The price for a Tool Kit is $" + toolKit)
         elif select == 4:
-            print("Electronic Kit")
+            print("The price for an Electronic Kit is $" + str(sellItem("Electronic Kit")))
         elif select == 5:
-            print("Steel Wire")
+            print("The price for a spool of Steel Wire is $" + str(sellItem("Steel Wire")))
         elif select == 6:
-            print("Steel Hook")
+            print("The price for a Steel Hook is $" + str(sellItem("Steel Hook")))
         elif select == 7:
-            print("Rope")
+            print("The price for a Rope is $" + str(sellItem("Rope")))
         elif select == 8:
-            print("Reinforced Rope")
+            print("The price for a Reinforced Rope is $" + str(sellItem("Reinforced Rope")))
         elif select == 9:
-            print("Rope and Hook")
+            print("The price for a Rope and Hook is $" + str(sellItem("Rope and Hook")))
         elif select == 10:
-            print("Reinforced Rope and Hook")
+            print("The price for a Reinforced Rope and Hook is $" + str(sellItem("Reinforced Rope and Hook")))
         elif select == 11:
-            print("MD5 Crack USB")
+            print("The price for a MD5 Crack USB is $" + str(sellItem("MD5 Crack USB")))
         elif select == 12:
-            print("Trojan USB")
+            print("The price for a Trojan USB is $" + str(sellItem("Trojan USB")))
         elif select == 13:
-            print("Repair Kit")
+            print("The price for a Repair Kit is $" + repairKit)
         elif select == 14:
-            print("Pistol Ammo")
+            print("The price for a box of Pistol Ammo is $" + ammo)
         elif select == 15:
-            print("Iron Powder")
+            print("The price for a pile of Iron Powder is $" + str(sellItem("Iron Powder")))
         elif select == 16:
-            print("Aluminium Powder")
+            print("The price for a pile of Aluminium Powder is $" + str(sellItem("Aluminium Powder")))
         elif select == 17:
-            print("Thermite")
+            print("The price for a canister of Thermite is $" + str(sellItem("Thermite")))
         elif select == 18:
-            print("Drill")
+            print("The price for a Drill is $" + str((sellItem("Drill") + (toolKit * 2))))
         elif select == 19:
-            print("night Vision Goggles")
+            print("The price for a pair of Night Vision Goggles is $" + str(sellItem("Night Vision Goggles")))
         elif select == 20:
-            print("Light Armour")
+            print("The price for a Light Armour is $" + str(sellItem("Light Armour")))
         elif select == 21:
-            print("Exit")
+            print("Exiting")
+        else:
+            print("Please type a valid number")
+            print("Exiting")
     elif choice == 2:
         print("Buy Van")
     elif choice == 3:
@@ -123,3 +134,5 @@ while True:
     elif choice == 5:
         print("Closing")
         break
+    else:
+        print("Please type a valid number")
