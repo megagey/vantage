@@ -1,10 +1,12 @@
+from math import floor
+
 prices = {"aluminiumBase" : 83.4, "copperBase" : 20.84, "fibreBase" : 83.4, "glassBase" : 41.7, "ironBase" : 125.1, 
 "metalScrapBase" : 125.1, "plasticBase" : 125.1, "steelBase" : 166.8, "rubberBase" : 83.4}
 
 stock = {"aluminiumStock" : 5000, "copperStock" : 5000, "fibreStock" : 5000, "glassStock" : 5000, "ironStock" : 5000, 
 "metalScrapStock" : 5000, "plasticStock" : 5000, "steelStock" : 5000, "rubberStock" : 5000}
 
-items = {"Lock Pick": "metalScrap-42 plastic-52", "Advanced Lock Pick" : "metalScrap-42 plastic-52", 
+items = {"Lock Pick" : "metalScrap-42 plastic-52", "Advanced Lock Pick" : "metalScrap-42 plastic-52", 
 "Electronic Kit" : "aluminium-34 metalScrap-87 plastic-55", "Steel Wire" : "steel-40", "Steel Hook" : "steel-100", 
 "Rope" : "fibre-55", "Reinforced Rope" : "fibre-55 steel-1800", "Rope and Hook" : "fibre-55 steel-100", 
 "Reinforced Rope and Hook" : "fibre-55 steel-1900", "MD5 Crack USB" : "aluminium-112 iron-23 metalScrap-195 plastic-164", 
@@ -23,7 +25,6 @@ def isFloat(string):
         return True
     else:
         return False
-
 
 def averageStock():
     return (stock["aluminiumStock"] + stock["copperStock"] + stock["fibreStock"] + stock["glassStock"] + stock["ironStock"] 
@@ -47,7 +48,9 @@ def sellItem(item):
             if e.isdigit() == False:
                 cost = materialPrice(prices[e + "Base"], stock[e + "Stock"])
             else:
-                price += cost * int(e)
+                if int(e) > 100:
+                    refined = floor(int(e)/100) 
+                price += cost * (int(e) + (10 * refined)) 
     return price
 
 def menu():
@@ -57,7 +60,7 @@ def menu():
     print("3 | Check Stock")
     print("4 | Check Pricing")
     print("5 | Exit")
-    return input("Please type a number")
+    return input("Please type a number\n")
 
 def sell():
     print("1  | Lock Pick")
@@ -81,7 +84,7 @@ def sell():
     print("19 | Night Vision Goggles")
     print("20 | Light Armour")
     print("21 | Exit")
-    return input("Please type a number")
+    return input("Please type a number\n")
 
 choice = 0
 while True:
@@ -93,7 +96,7 @@ while True:
         elif select == "2":
             print("The price for an Advanced Lock Pick is $" + str((sellItem("Advanced Lock Pick") + toolKit)))
         elif select == "3":
-            print("The price for a Tool Kit is $" + str(toolKit))
+            print("The price for a Tool Kit is $" + str(toolKit + 100))
         elif select == "4":
             print("The price for an Electronic Kit is $" + str(sellItem("Electronic Kit")))
         elif select == "5":
@@ -113,9 +116,9 @@ while True:
         elif select == "12":
             print("The price for a Trojan USB is $" + str(sellItem("Trojan USB")))
         elif select == "13":
-            print("The price for a Repair Kit is $" + str(repairKit))
+            print("The price for a Repair Kit is $" + str(repairKit + 100))
         elif select == "14":
-            print("The price for a box of Pistol Ammo is $" + str(ammo))
+            print("The price for a box of Pistol Ammo is $" + str(ammo + 100))
         elif select == "15":
             print("The price for a pile of Iron Powder is $" + str(sellItem("Iron Powder")))
         elif select == "16":
