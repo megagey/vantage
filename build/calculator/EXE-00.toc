@@ -53,10 +53,10 @@
    'C:\\Users\\eweni\\Pictures\\LongHeist\\Vantage Tech and '
    'Hardware\\vantage\\calculator.py',
    'PYSOURCE'),
-  ('python311.dll', 'E:\\Programs\\Python 3.11.1\\python311.dll', 'BINARY'),
   ('VCRUNTIME140.dll',
    'E:\\Programs\\Python 3.11.1\\VCRUNTIME140.dll',
    'BINARY'),
+  ('python311.dll', 'E:\\Programs\\Python 3.11.1\\python311.dll', 'BINARY'),
   ('_decimal.pyd',
    'E:\\Programs\\Python 3.11.1\\DLLs\\_decimal.pyd',
    'EXTENSION'),
@@ -86,7 +86,7 @@
  [],
  False,
  False,
- 1681977741,
+ 1681978079,
  [('runw.exe',
    'E:\\Programs\\Python '
    '3.11.1\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
