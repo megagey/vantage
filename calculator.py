@@ -88,7 +88,7 @@ def sell():
     print("21 | Exit")
     return input("Please type a number\n")
 
-choice = 0
+choice = ""
 while True:
     choice = menu()
     if choice == "1":
