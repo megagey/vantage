@@ -50,7 +50,9 @@ def sellItem(item):
             else:
                 if int(e) > 100:
                     refined = floor(int(e)/100) 
-                price += cost * (int(e) + (10 * refined)) 
+                    price += cost * (int(e) + (10 * refined))
+                else:
+                    price += cost * int(e)
     return price
 
 def menu():
